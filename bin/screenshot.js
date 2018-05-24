@@ -27,7 +27,7 @@ const takeScreenshot = async url => {
 					await page.waitFor(8000); /* yt speed */
 					await page.screenshot({ path: outPath, type: 'png' });
 					await browser.close();
-					yay(log);
+					yay({});
 				}
 			} catch (e) {
 				nay([e, msg]);
