@@ -1,6 +1,6 @@
 const onPlayerReady = (player, post) => {
-	const length = player.getDuration();
-	player.seekTo(Math.random() * length, true);
+	const length = player.getDuration() - 300;
+	player.seekTo(150 + Math.random() * length, true);
 	player.playVideo();
 	document.querySelector('x-post x-subs').innerHTML = post;
 	console.log('hella');
