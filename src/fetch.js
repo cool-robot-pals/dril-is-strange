@@ -1,7 +1,7 @@
 require('dotenv').config();
 const twitter = require('twitter');
 const fs = require('fs');
-const { randomArrKey, txtToArr } = require('./helper');
+const { randomArrKey, txtToArr, pad } = require('./helper');
 
 const video = randomArrKey(
 	txtToArr(fs.readFileSync('./txt/videos.txt', 'utf8'))
@@ -22,15 +22,18 @@ const getDate = () => {
 
 const getTweets = async () => {
 	const date = getDate();
-	return client.get('search/tweets', {
-		q: `from:dril`,
-		until: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
+	return client.get('statuses/user_timeline', {
+		screen_name: `dril`,
+		exclude_replies: true,
+		include_rts: false,
+		trim_user: true,
+		count: 199,
 	});
 };
 
 const go = async () => {
 	try {
-		const tweets = (await getTweets()).statuses
+		const tweets = (await getTweets())
 			.filter(_ => _.text.length > 5)
 			.filter(_ => !_.text.includes('t.co'))
 			.filter(_ => !_.text.includes('RT'));
