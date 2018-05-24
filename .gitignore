@@ -1,0 +1,7 @@
+
+node_modules
+out/*
+!out/.gitexists
+.env
+.glitch-assets
+.vscode

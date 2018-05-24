@@ -1,0 +1,11 @@
+const path = require('path');
+
+module.exports = {
+	ports: {
+		live: 3000,
+		test: 1995,
+	},
+	paths: {
+		screenie: path.resolve(__dirname, 'out', 'pompidou.png'),
+	},
+};

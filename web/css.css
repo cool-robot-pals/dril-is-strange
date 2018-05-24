@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css?family=Delius&subset=latin-ext');
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+x-post {
+	width: 1280px;
+	height: 720px;
+	position: relative;
+	overflow: hidden;
+	display: block;
+}
+
+x-post iframe {
+	margin-top: -200px;
+}
+
+x-subs {
+	--shadow-core: rgba(0, 0, 0, 0.5);
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	padding: 3.5% 10%;
+	color: #fff;
+	font-family: 'Delius', cursive;
+	font-size: 30px;
+	pointer-events: none;
+	text-align: center;
+	opacity: 0.9;
+	font-weight: 100;
+	text-shadow: 1px 0 1px var(--shadow-core), -1px 0 1px var(--shadow-core),
+		0 1px 1px var(--shadow-core), 0 -1px 1px var(--shadow-core),
+		0 2px 4px var(--shadow-core);
+}
