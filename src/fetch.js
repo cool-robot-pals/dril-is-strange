@@ -32,7 +32,8 @@ const go = async () => {
 	try {
 		const tweets = (await getTweets()).statuses
 			.filter(_ => _.text.length > 5)
-			.filter(_ => !_.text.includes('t.co'));
+			.filter(_ => !_.text.includes('t.co'))
+			.filter(_ => !_.text.includes('RT'));
 
 		const tweet = randomArrKey(tweets)
 			.text.replace(/\n/g, ' ')
