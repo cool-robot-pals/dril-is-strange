@@ -1,7 +1,12 @@
 require('dotenv').config();
 const twitter = require('twitter');
 const fs = require('fs');
-const { randomArrKey, txtToArr, pad } = require('./helper');
+const {
+	randomArrKey,
+	txtToArr,
+	pad,
+	capitalizeFirstLetter,
+} = require('./helper');
 
 const video = randomArrKey(
 	txtToArr(fs.readFileSync('./txt/videos.txt', 'utf8'))
@@ -41,11 +46,13 @@ const go = async () => {
 			.filter(_ => !_.text.includes('t.co'))
 			.filter(_ => !_.text.includes('RT'));
 
-		const post = randomArrKey(tweets)
-			.text.replace(/\n/g, ' ')
-			.replace(/\#/g, '')
-			.replace(/\@/g, '')
-			.trim();
+		const post = capitalizeFirstLetter(
+			randomArrKey(tweets)
+				.text.replace(/\n/g, ' ')
+				.replace(/\#/g, '')
+				.replace(/\@/g, '')
+				.trim()
+		);
 
 		const monologue = Math.random() > 0.5;
 
