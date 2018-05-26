@@ -43,6 +43,8 @@ const go = async () => {
 
 		const post = randomArrKey(tweets)
 			.text.replace(/\n/g, ' ')
+			.replace(/\#/g, '')
+			.replace(/\@/g, '')
 			.trim();
 
 		const monologue = Math.random() > 0.5;
