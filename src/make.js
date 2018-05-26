@@ -1,16 +1,8 @@
 require('dotenv').config();
 const twitter = require('twitter');
+const yaml = require('js-yaml');
 const fs = require('fs');
-const {
-	randomArrKey,
-	txtToArr,
-	pad,
-	capitalizeFirstLetter,
-} = require('./helper');
-
-const video = randomArrKey(
-	txtToArr(fs.readFileSync('./txt/videos.txt', 'utf8'))
-);
+const { randomArrKey, pad, capitalizeFirstLetter } = require('./helper');
 
 const client = new twitter({
 	consumer_key: process.env.TWITTER_CK,
@@ -52,6 +44,10 @@ const go = async () => {
 				.replace(/\#/g, '')
 				.replace(/\@/g, '')
 				.trim()
+		);
+
+		const video = randomArrKey(
+			yaml.safeLoad(fs.readFileSync('./txt/videos.txt', 'utf8'))
 		);
 
 		const monologue = Math.random() > 0.5;

@@ -5,7 +5,7 @@ const config = require('../.hellarc');
 const twitter = require('twitter');
 const fs = require('fs');
 const chalk = require('chalk');
-const randomArrKey = items => items[Math.floor(Math.random() * items.length)];
+const { randomArrKey } = require('./../src/helper');
 
 const client = new twitter({
 	consumer_key: process.env.TWITTER_CK,

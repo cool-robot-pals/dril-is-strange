@@ -1,8 +1,11 @@
-4HxiuGpPtQ4
-BGG1--x0k6A
-UeasBymi6Zo
-WqgLUk6ABr4
-ku5AKcreD_0
-3uyMVuYMm4s
-zttOFABcMxA
-sn0bLKzl064
+# These are youtube video ids. 
+# A random one gets selected,
+# then screenshotted at a random time
+- 4HxiuGpPtQ4
+- BGG1--x0k6A
+- UeasBymi6Zo
+- WqgLUk6ABr4
+- ku5AKcreD_0
+- 3uyMVuYMm4s
+- zttOFABcMxA
+- sn0bLKzl064
