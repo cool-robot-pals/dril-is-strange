@@ -45,7 +45,7 @@ const go = async () => {
 			.text.replace(/\n/g, ' ')
 			.trim();
 
-		const monologue = Math.random() > 0.4;
+		const monologue = Math.random() > 0.5;
 
 		return {
 			post,
