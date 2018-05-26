@@ -22,7 +22,7 @@ x-post iframe {
 }
 
 x-subs {
-	--shadow-core: rgba(0, 0, 0, 0.75);
+	--shadow-core: rgba(0, 0, 0, 0.66);
 	position: absolute;
 	bottom: 0;
 	left: 0;
@@ -35,7 +35,6 @@ x-subs {
 	pointer-events: none;
 	text-align: center;
 	opacity: 0.9;
-	font-weight: 800;
 	text-shadow: 1px 0 1px var(--shadow-core), -1px 0 1px var(--shadow-core),
 		0 1px 1px var(--shadow-core), 0 -1px 1px var(--shadow-core),
 		0 2px 4px var(--shadow-core);
