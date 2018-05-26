@@ -40,3 +40,7 @@ x-subs {
 		0 1px 1px var(--shadow-core), 0 -1px 1px var(--shadow-core),
 		0 2px 4px var(--shadow-core);
 }
+
+x-subs.em {
+	font-style: italic;
+}

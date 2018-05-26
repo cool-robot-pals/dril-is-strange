@@ -1,9 +1,8 @@
-const onPlayerReady = (player, post) => {
+const onPlayerReady = player => {
 	const length = player.getDuration() - 300;
 	player.seekTo(150 + Math.random() * length, true);
 	player.playVideo();
-	document.querySelector('x-post x-subs').innerHTML = post;
-	console.log('hella');
+	return Promise.resolve();
 };
 
 const getPost = async () => {
@@ -11,7 +10,7 @@ const getPost = async () => {
 };
 
 window.onYouTubePlayerAPIReady = async () => {
-	const { tweet, video } = await getPost();
+	const { post, video, monologue } = await getPost();
 
 	const player = new YT.Player(document.querySelector('x-post x-video'), {
 		height: '1120',
@@ -26,7 +25,13 @@ window.onYouTubePlayerAPIReady = async () => {
 		enablejsapi: 1,
 		videoId: video,
 		events: {
-			onReady: ev => onPlayerReady(ev.target, tweet),
+			onReady: ev =>
+				onPlayerReady(ev.target).then(() => {
+					document.querySelector('x-post x-subs').innerHTML = post;
+					if (monologue)
+						document.querySelector('x-post x-subs').classList.add('em');
+					console.log('hella');
+				}),
 		},
 	});
 };

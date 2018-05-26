@@ -22,6 +22,9 @@ const getDate = () => {
 
 const getTweets = async () => {
 	const date = getDate();
+	if (!process.env.TWITTER_CK) {
+		return require('../txt/_cache.js');
+	}
 	return client.get('statuses/user_timeline', {
 		screen_name: `dril`,
 		exclude_replies: true,
@@ -38,12 +41,16 @@ const go = async () => {
 			.filter(_ => !_.text.includes('t.co'))
 			.filter(_ => !_.text.includes('RT'));
 
-		const tweet = randomArrKey(tweets)
+		const post = randomArrKey(tweets)
 			.text.replace(/\n/g, ' ')
 			.trim();
+
+		const monologue = Math.random() > 0.4;
+
 		return {
-			tweet,
+			post,
 			video,
+			monologue,
 		};
 	} catch (e) {
 		console.error(e);
