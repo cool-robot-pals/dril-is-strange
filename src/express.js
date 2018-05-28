@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const make = require('./make');
+const { make } = require('./make');
 
 app.use(express.static('web'));
 
