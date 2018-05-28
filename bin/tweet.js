@@ -34,12 +34,16 @@ const mediaClient = new twitterLite({
 			media: fs.readFileSync(config.paths.screenie),
 		});
 
-		const media = await mediaClient.post('media/metadata/create', {
-			media_id: screenshot.media_id_string,
-			alt_text: {
-				text: data.post.substring(0, 420),
-			},
-		});
+		const media = await mediaClient
+			.post('media/metadata/create', {
+				media_id: screenshot.media_id_string,
+				alt_text: {
+					text: data.post.substring(0, 420),
+				},
+			})
+			.catch(err => ({
+				err,
+			}));
 
 		const tweet = await client.post('statuses/update', {
 			media_ids: screenshot.media_id_string,
@@ -47,7 +51,7 @@ const mediaClient = new twitterLite({
 		});
 
 		console.info(chalk.blue(`i Conn info:`));
-		console.info(JSON.stringify({ media }, null, '\t'));
+		console.info(JSON.stringify({ screenshot, media, tweet }, null, '\t'));
 		console.info(chalk.green(`✔ Posted: ${data.post}`));
 		return true;
 	} catch (error) {
