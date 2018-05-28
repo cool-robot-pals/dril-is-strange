@@ -4,10 +4,7 @@ const { randomArrKey, pad, capitalizeFirstLetter } = require('./helper');
 const { getTweets } = require('./getTweets');
 
 const filterTweets = tweets =>
-	tweets
-		.filter(_ => _.text.length > 5)
-		.filter(_ => !_.text.includes('t.co'))
-		.filter(_ => !_.text.includes('RT'));
+	tweets.filter(_ => _.text.length > 5).filter(_ => !_.text.includes('t.co'));
 
 const filterTweet = tweet =>
 	capitalizeFirstLetter(
@@ -18,7 +15,7 @@ const filterTweet = tweet =>
 			.trim()
 	);
 
-const go = async () => {
+const make = async () => {
 	try {
 		const tweets = filterTweets(await getTweets());
 
@@ -39,4 +36,9 @@ const go = async () => {
 	}
 };
 
-module.exports = go;
+const _jest = {
+	filterTweet,
+	filterTweets,
+};
+
+module.exports = { make, _jest };
