@@ -34,6 +34,12 @@ const mediaClient = new twitterLite({
 			media: fs.readFileSync(config.paths.screenie),
 		});
 
+		/*
+		media/metadata/create is hella flaky and will often
+		return an invalid response but actually post the
+		alt text anyway. This is why we're eating up its 
+		error responses here instead of throwing them
+		*/
 		const media = await mediaClient
 			.post('media/metadata/create', {
 				media_id: screenshot.media_id_string,
