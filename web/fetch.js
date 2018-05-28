@@ -30,7 +30,12 @@ window.onYouTubePlayerAPIReady = async () => {
 					document.querySelector('x-post x-subs').innerHTML = post;
 					if (monologue)
 						document.querySelector('x-post x-subs').classList.add('em');
-					console.log('hella');
+					console.log(
+						JSON.stringify({
+							ready: true,
+							post,
+						})
+					);
 				}),
 		},
 	});
