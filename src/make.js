@@ -18,17 +18,32 @@ const getDate = () => {
 };
 
 const getTweets = async () => {
-	const date = getDate();
 	if (!process.env.TWITTER_CK) {
 		return require('../txt/_cache.js');
 	}
-	return client.get('statuses/user_timeline', {
-		screen_name: `dril`,
-		exclude_replies: true,
-		include_rts: false,
-		trim_user: true,
-		count: 199,
-	});
+
+	const date = getDate();
+	const getTweets = max_id =>
+		client.get('statuses/user_timeline', {
+			screen_name: `dril`,
+			exclude_replies: true,
+			include_rts: false,
+			trim_user: true,
+			count: 199,
+			max_id,
+		});
+
+	const tweets = [];
+
+	for (const index of [1, 2, 3, 4]) {
+		tweets.push(
+			...(await getTweets(
+				[...tweets].pop() ? [...tweets].pop().id_str : undefined
+			)).filter(_ => _.text)
+		);
+	}
+
+	return tweets;
 };
 
 const go = async () => {

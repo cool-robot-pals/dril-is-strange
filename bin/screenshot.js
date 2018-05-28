@@ -23,15 +23,14 @@ const takeScreenshot = async url => {
 	return new Promise((yay, nay) => {
 		page.on('console', async msg => {
 			try {
-				if (msg.text() === 'hella') {
+				const log = JSON.parse(msg.text());
+				if (log.ready) {
 					await page.waitFor(8000); /* yt speed */
 					await page.screenshot({ path: outPath, type: 'png' });
 					await browser.close();
-					yay({});
+					yay(log);
 				}
-			} catch (e) {
-				nay([e, msg]);
-			}
+			} catch (e) {}
 		});
 		Promise.all([
 			page.setViewport({ width: 1280, height: 720 }),
