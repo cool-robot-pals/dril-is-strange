@@ -38,7 +38,7 @@ x-subs {
 	font-size: 34px;
 	pointer-events: none;
 	text-align: center;
-	opacity: 0.8;
+	opacity: 0.9;
 	text-shadow: 1px 0 1px var(--shadow-core), -1px 0 1px var(--shadow-core),
 		0 1px 1px var(--shadow-core), 0 -1px 1px var(--shadow-core),
 		0 2px 4px var(--shadow-core);
