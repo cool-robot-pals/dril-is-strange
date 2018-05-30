@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Delius&subset=latin-ext');
 
+@font-face {
+	font-family: 'helvetihand';
+	src: url('./helvetihand.ttf');
+}
 * {
 	margin: 0;
 	padding: 0;
@@ -30,7 +34,7 @@ x-subs {
 	margin: auto;
 	padding: 3.5% 10%;
 	color: #fff;
-	font-family: 'Delius', cursive;
+	font-family: 'helvetihand', cursive;
 	font-size: 30px;
 	pointer-events: none;
 	text-align: center;
