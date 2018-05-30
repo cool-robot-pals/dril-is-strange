@@ -1,5 +1,5 @@
 const getPost = async () => {
-	return fetch('/make').then(_ => _.json());
+	return window.fetch('/make').then(_ => _.json());
 };
 
 const seekPlayerToRandomSpot = player => {
@@ -8,7 +8,7 @@ const seekPlayerToRandomSpot = player => {
 	player.playVideo();
 };
 
-const addSubtitles = ($where, post, monologue) => {
+const addSubtitles = ($where, post, monologue = false) => {
 	$where.innerHTML = post;
 	if (monologue) $where.classList.add('em');
 };
@@ -33,7 +33,7 @@ const makeYoutubePlayer = (youtube, $video, videoId) =>
 		});
 	});
 
-const logOutput = loggables => {
+const logOutput = (loggables = {}) => {
 	console.log(
 		JSON.stringify({
 			ready: true,
@@ -56,3 +56,11 @@ const main = async () => {
 };
 
 window.onYouTubePlayerAPIReady = main;
+
+module.exports = {
+	logOutput,
+	makeYoutubePlayer,
+	addSubtitles,
+	seekPlayerToRandomSpot,
+	getPost,
+};
