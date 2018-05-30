@@ -1,9 +1,8 @@
-@import url('https://fonts.googleapis.com/css?family=Delius&subset=latin-ext');
-
 @font-face {
 	font-family: 'helvetihand';
 	src: url('./helvetihand.ttf');
 }
+
 * {
 	margin: 0;
 	padding: 0;
