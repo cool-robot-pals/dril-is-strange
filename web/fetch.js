@@ -1,5 +1,5 @@
 const getPost = async () => {
-	return fetch('/make').then(_ => _.json());
+	return window.fetch('/make').then(_ => _.json());
 };
 
 const seekPlayerToRandomSpot = player => {
@@ -8,9 +8,9 @@ const seekPlayerToRandomSpot = player => {
 	player.playVideo();
 };
 
-const addSubtitles = ($where, post, monologue) => {
+const addSubtitles = ($where, post, monologue = false) => {
 	$where.innerHTML = post;
-	if (monologue) where.classList.add('em');
+	if (monologue) $where.classList.add('em');
 };
 
 const makeYoutubePlayer = (youtube, $video, videoId) =>
@@ -33,21 +33,34 @@ const makeYoutubePlayer = (youtube, $video, videoId) =>
 		});
 	});
 
-window.onYouTubePlayerAPIReady = async () => {
+const logOutput = (loggables = {}) => {
+	console.log(
+		JSON.stringify({
+			ready: true,
+			...loggables,
+		})
+	);
+};
+
+const main = async () => {
+	const { post, video, monologue } = await getPost();
 	const [$video, $subs] = ['x-post x-video', 'x-post x-subs'].map($ =>
 		document.querySelector($)
 	);
-
-	const { post, video, monologue } = await getPost();
 	const player = await makeYoutubePlayer(window.YT, $video, video);
 
 	seekPlayerToRandomSpot(player);
 	addSubtitles($subs, post, monologue);
 
-	console.log(
-		JSON.stringify({
-			ready: true,
-			post,
-		})
-	);
+	logOutput({ post });
+};
+
+window.onYouTubePlayerAPIReady = main;
+
+module.exports = {
+	logOutput,
+	makeYoutubePlayer,
+	addSubtitles,
+	seekPlayerToRandomSpot,
+	getPost,
 };
