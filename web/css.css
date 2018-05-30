@@ -22,7 +22,8 @@ x-post iframe {
 }
 
 x-subs {
-	--shadow-core: rgba(0, 0, 0, 0.66);
+	--shadow-core: rgba(0, 0, 0, 0.5);
+	filter: blur(0.25px);
 	position: absolute;
 	bottom: 0;
 	left: 0;
@@ -31,10 +32,10 @@ x-subs {
 	padding: 3.5% 10%;
 	color: #fff;
 	font-family: 'Delius', cursive;
-	font-size: 30px;
+	font-size: 34px;
 	pointer-events: none;
 	text-align: center;
-	opacity: 0.9;
+	opacity: 0.8;
 	text-shadow: 1px 0 1px var(--shadow-core), -1px 0 1px var(--shadow-core),
 		0 1px 1px var(--shadow-core), 0 -1px 1px var(--shadow-core),
 		0 2px 4px var(--shadow-core);
