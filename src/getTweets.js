@@ -43,9 +43,7 @@ const filterDupes = async (client, tweets) => {
 			client,
 			process.env.TWITTER_USER_ME
 		);
-		console.log(tweets.length);
-		const rt = tweets.filter(_ => !existingTweets.includes(_.text));
-		console.log(rt.length);
+		return tweets.filter(_ => !existingTweets.includes(_.text));
 		return rt;
 	} catch (e) {
 		console.error(`couldnt fetch existing tweets ${e}`);
