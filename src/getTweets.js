@@ -74,7 +74,7 @@ const getTweetsFromClient = async (client, loop) => {
 const getClient = twitterConfig =>
 	Object.values(twitterConfig).every(_ => _)
 		? new twitter(twitterConfig)
-		: new cacheClient();
+		: cacheClient();
 
 const getTweets = async () => {
 	const client = getClient(twitterConfig);
