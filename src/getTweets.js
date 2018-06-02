@@ -21,7 +21,7 @@ const fetchFromClient = (client, params) =>
 		...params,
 	});
 
-const getExistingTweets = async client =>
+const getExistingTweets = async (client, user) =>
 	(await fetchFromClient(client, {
 		screen_name: process.env.TWITTER_USER_ME,
 		count: 40,
@@ -38,7 +38,10 @@ const getExistingTweets = async client =>
 
 const filterDupes = async (client, tweets) => {
 	try {
-		const existingTweets = await getExistingTweets(client);
+		const existingTweets = await getExistingTweets(
+			client,
+			process.env.TWITTER_USER_ME
+		);
 		console.log(tweets.length);
 		const rt = tweets.filter(_ => !existingTweets.includes(_.text));
 		console.log(rt.length);
