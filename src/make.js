@@ -1,25 +1,13 @@
 const yaml = require('js-yaml');
 const fs = require('fs');
-const { randomArrKey, pad, capitalizeFirstLetter } = require('./helper');
+const { randomArrKey, pad, capitalizeFirstLetter } = require('./helper/etc');
 const { getTweets } = require('./getTweets');
-
-const filterTweets = tweets =>
-	tweets.filter(_ => _.text.length > 5).filter(_ => !_.text.includes('t.co'));
-
-const filterTweet = tweet =>
-	capitalizeFirstLetter(
-		tweet
-			.replace(/\n/g, ' ')
-			.replace(/\#/g, '')
-			.replace(/\@/g, '')
-			.trim()
-	);
 
 const make = async () => {
 	try {
-		const tweets = filterTweets(await getTweets());
+		const tweets = await getTweets();
 
-		const post = filterTweet(randomArrKey(tweets).text);
+		const post = randomArrKey(tweets).text;
 		const video = randomArrKey(
 			yaml.safeLoad(fs.readFileSync('./txt/videos.txt', 'utf8'))
 		);
@@ -36,9 +24,4 @@ const make = async () => {
 	}
 };
 
-const _jest = {
-	filterTweet,
-	filterTweets,
-};
-
-module.exports = { make, _jest };
+module.exports = { make };

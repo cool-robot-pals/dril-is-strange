@@ -6,7 +6,7 @@ const twitterLite = require('twitter-lite');
 const twitter = require('twitter');
 const fs = require('fs');
 const chalk = require('chalk');
-const { randomArrKey } = require('./../src/helper');
+const { randomArrKey } = require('./../src/helper/etc');
 
 const twitterParams = {
 	consumer_key: process.env.TWITTER_CK,
