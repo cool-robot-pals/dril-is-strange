@@ -1,6 +1,6 @@
 const { make } = require('./make.js');
 
-const mockTweets = ['valid tweet', 't.co link tweet'].map(_ => ({
+const mockTweets = ['a tweet'].map(_ => ({
 	text: _,
 }));
 const mockVideos = ['asdf'];
@@ -18,6 +18,6 @@ jest.mock('fs', () => ({
 describe('make', () => {
 	it('should make a post', async () => {
 		const post = await make();
-		expect(post).toMatchObject({ post: 'Valid tweet', video: 'asdf' });
+		expect(post).toMatchObject({ post: 'a tweet', video: 'asdf' });
 	});
 });
