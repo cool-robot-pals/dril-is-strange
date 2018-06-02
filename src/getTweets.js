@@ -1,5 +1,6 @@
 require('dotenv').config();
 const twitter = require('twitter');
+const { filterTweetText, filterTweets } = require('./helper/tweet.js');
 
 const twitterConfig = {
 	consumer_key: process.env.TWITTER_CK,
@@ -77,9 +78,15 @@ const getClient = twitterConfig =>
 
 const getTweets = async () => {
 	const client = getClient(twitterConfig);
-	return getTweetsFromClient(client, 4).then(tweets =>
-		filterDupes(client, tweets)
-	);
+	return getTweetsFromClient(client, 4)
+		.then(filterTweets)
+		.then(tweets =>
+			tweets.map(tweet => ({
+				...tweet,
+				text: filterTweetText(tweet.text),
+			}))
+		)
+		.then(tweets => filterDupes(client, tweets));
 };
 
 const _jest = {
