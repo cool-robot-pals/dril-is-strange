@@ -12,7 +12,7 @@ const make = async () => {
 			yaml.safeLoad(fs.readFileSync('./txt/videos.txt', 'utf8'))
 		);
 
-		const monologue = Math.random() > 0.5;
+		const monologue = Math.random() > 0.75;
 
 		return {
 			post,
