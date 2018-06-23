@@ -29,6 +29,6 @@ describe('filterTweets', () => {
 
 describe('filterTweetText', () => {
 	it('should filter @, #, & capitalize', () => {
-		expect(filterTweetText('@tweet #tweet')).toEqual('Tweet tweet');
+		expect(filterTweetText('@tweet #tweet')).toEqual('At tweet hashtag tweet');
 	});
 });

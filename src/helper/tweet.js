@@ -7,8 +7,8 @@ const filterTweetText = tweet =>
 	capitalizeFirstLetter(
 		tweet
 			.replace(/\n/g, ' ')
-			.replace(/\#/g, '')
-			.replace(/\@/g, '')
+			.replace(/\#/g, 'hashtag ')
+			.replace(/\@/g, 'at ')
 			.trim()
 	);
 
