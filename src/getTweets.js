@@ -9,8 +9,8 @@ const twitterConfig = {
 	access_token_secret: process.env.TWITTER_TS,
 };
 
-const cacheClient = () => ({
-	get: () => require('../txt/cache.json'),
+const backArchiveClient = () => ({
+	get: () => require('../txt/back-archive.json'),
 });
 
 const fetchFromClient = (client, params) =>
@@ -25,7 +25,7 @@ const fetchFromClient = (client, params) =>
 const getExistingTweets = async (client, user) =>
 	(await fetchFromClient(client, {
 		screen_name: process.env.TWITTER_USER_ME,
-		count: 40,
+		count: 80,
 	})).map(tweet => {
 		try {
 			const altText = tweet.extended_entities.media[0].ext_alt_text;
@@ -72,11 +72,15 @@ const getTweetsFromClient = async (client, loop) => {
 const getClient = twitterConfig =>
 	Object.values(twitterConfig).every(_ => _)
 		? new twitter(twitterConfig)
-		: cacheClient();
+		: backArchiveClient();
 
 const getTweets = async () => {
 	const client = getClient(twitterConfig);
-	return getTweetsFromClient(client, 4)
+	return Promise.all([
+		getTweetsFromClient(client, 4),
+		getTweetsFromClient(backArchiveClient(), 1),
+	])
+		.then(results => results.reduce((acc, _) => [...acc, ..._], []))
 		.then(filterTweets)
 		.then(tweets =>
 			tweets.map(tweet => ({
@@ -90,7 +94,7 @@ const getTweets = async () => {
 const _jest = {
 	getTweetsFromClient,
 	filterDupes,
-	cacheClient,
+	backArchiveClient,
 };
 
 module.exports = { getTweets, _jest };

@@ -1,21 +1,21 @@
 const {
 	getTweetsFromClient,
 	filterDupes,
-	cacheClient,
+	backArchiveClient,
 } = require('./getTweets.js')._jest;
 
 jest.mock('twitter', () => jest.fn());
 
-describe('cacheClient', () => {
+describe('backArchiveClient', () => {
 	it('is type safe', () => {
-		expect(cacheClient()).toEqual(
+		expect(backArchiveClient()).toEqual(
 			expect.objectContaining({
 				get: expect.anything(),
 			})
 		);
 	});
-	it('gets tweets from cache.json', async () => {
-		expect(await getTweetsFromClient(cacheClient(), 1)).toEqual(
+	it('gets tweets from back-archive.json', async () => {
+		expect(await getTweetsFromClient(backArchiveClient(), 1)).toEqual(
 			expect.arrayContaining(
 				[
 					'babies cant smile. its a biological reflex from the brain stem. its fake. they dont know how to smile',

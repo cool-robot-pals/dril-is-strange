@@ -57,10 +57,12 @@ const main = async () => {
 
 window.onYouTubePlayerAPIReady = main;
 
-module.exports = {
-	logOutput,
-	makeYoutubePlayer,
-	addSubtitles,
-	seekPlayerToRandomSpot,
-	getPost,
-};
+if (module) {
+	module.exports = {
+		logOutput,
+		makeYoutubePlayer,
+		addSubtitles,
+		seekPlayerToRandomSpot,
+		getPost,
+	};
+}
