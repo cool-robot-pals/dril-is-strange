@@ -1,6 +1,6 @@
 # dril-is-strange
 
-<img src="https://pbs.twimg.com/media/DeKx0SkVwAAs_JJ.jpg" />
+<img src="https://pbs.twimg.com/media/DfNuToCXcAAS-Yo.jpg" />
 
 Source for <a href="https://twitter.com/drilisstrange">@drilisstrange</a>. A bot that overimposes tweets from popular twitter user dril over life is strange screenshots
 
