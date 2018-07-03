@@ -1,12 +1,21 @@
 # These are youtube video ids. 
 # A random one gets selected,
 # then screenshotted at a random time
+
+# The original 5
 - 4HxiuGpPtQ4
 - BGG1--x0k6A
 - UeasBymi6Zo
 - WqgLUk6ABr4
 - ku5AKcreD_0
+
+# Angry gay nerd 
 - uec2mR-232s
 - zttOFABcMxA
 - sn0bLKzl064
+
+# Young gay nerds
 - KmWqV0aUktQ
+
+# That sweet sweet boy
+- Whl5_8s7j4c
