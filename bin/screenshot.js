@@ -1,9 +1,12 @@
 const server = require('../src/express.js');
 const config = require('../.hellarc');
 const puppeteer = require('puppeteer');
+const chalk = require('chalk');
 const path = require('path');
 
 const outPath = config.paths.screenie;
+
+const isCmd = !module.parent;
 
 const startServer = () =>
 	new Promise(rt => {
@@ -25,7 +28,7 @@ const takeScreenshot = async url => {
 			try {
 				const log = JSON.parse(msg.text());
 				if (log.ready) {
-					await page.waitFor(8000); /* yt speed */
+					await page.waitFor(1000); /* prevent black screens, spinner, etc */
 					await page.screenshot({ path: outPath, type: 'png' });
 					await browser.close();
 					yay(log);
@@ -35,13 +38,21 @@ const takeScreenshot = async url => {
 		Promise.all([
 			page.setViewport({ width: 1280, height: 720 }),
 			page.goto(url),
-		]);
+		]).then(() => {
+			if (isCmd) console.info(chalk.blue(`i Website open – wait for yt`));
+		});
 	});
 };
 
-const cmd = async () => startServer().then(url => takeScreenshot(url));
+const cmd = async () => {
+	const url = await startServer();
+	console.info(chalk.blue(`i Server started`));
+	const info = await takeScreenshot(url);
+	console.info(chalk.blue(`✔ Screenshot taken`));
+	console.info(JSON.stringify(info, null, '\t'));
+};
 
-if (!module.parent)
+if (isCmd)
 	cmd().then(() => {
 		process.exit();
 	});

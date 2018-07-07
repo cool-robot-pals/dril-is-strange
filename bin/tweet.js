@@ -47,9 +47,7 @@ const mediaClient = new twitterLite({
 					text: data.post.substring(0, 420),
 				},
 			})
-			.catch(err => ({
-				err,
-			}));
+			.catch(() => {});
 
 		const tweet = await client.post('statuses/update', {
 			media_ids: screenshot.media_id_string,

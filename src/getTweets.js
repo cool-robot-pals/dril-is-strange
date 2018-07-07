@@ -1,5 +1,6 @@
 require('dotenv').config();
 const twitter = require('twitter');
+const chalk = require('chalk');
 const { filterTweetText, filterTweets } = require('./helper/tweet.js');
 
 const twitterConfig = {
@@ -27,14 +28,18 @@ const getExistingTweets = async (client, user) =>
 		screen_name: process.env.TWITTER_USER_ME,
 		count: 80,
 	})).map(tweet => {
-		try {
-			const altText = tweet.extended_entities.media[0].ext_alt_text;
-			if (!altText) throw new Error('undefined alt txt');
-			return altText;
-		} catch (e) {
-			console.error(`missing media info ${e}`);
+		const altText = tweet.extended_entities.media[0].ext_alt_text;
+		if (!altText) {
+			console.info(
+				chalk.red(
+					`✘ Undefined alt txt in https://twitter.com/status/status/${
+						tweet.id_str
+					}`
+				)
+			);
 			return '';
 		}
+		return altText;
 	});
 
 const filterDupes = async (client, tweets) => {
@@ -46,7 +51,7 @@ const filterDupes = async (client, tweets) => {
 		return tweets.filter(_ => !existingTweets.includes(_.text));
 		return rt;
 	} catch (e) {
-		console.error(`couldnt fetch existing tweets ${e}`);
+		console.error(`couldn't fetch existing tweets ${e}`);
 		return tweets;
 	}
 };
