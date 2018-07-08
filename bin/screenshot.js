@@ -50,7 +50,7 @@ const cmd = async () => {
 	const info = await takeScreenshot(url);
 	if (isCmd) console.info(chalk.blue(`✔ Screenshot taken`));
 	if (isCmd) console.info(JSON.stringify(info, null, '\t'));
-	return info();
+	return info;
 };
 
 if (isCmd)
