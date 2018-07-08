@@ -3,7 +3,7 @@ const getPost = async () => {
 };
 
 const getSeekableRandomSpot = player => {
-	const length = player.getDuration() - 300;
+	const length = player.getDuration() - 600;
 	const spot = 150 + Math.random() * length;
 	return spot;
 };
@@ -104,8 +104,8 @@ if (module) {
 	module.exports = {
 		logOutput,
 		makeYoutubePlayer,
+		getSeekableRandomSpot,
 		addSubtitles,
-		seekPlayerToRandomSpot,
 		getPost,
 	};
 }
