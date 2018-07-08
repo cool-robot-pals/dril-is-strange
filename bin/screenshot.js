@@ -46,10 +46,11 @@ const takeScreenshot = async url => {
 
 const cmd = async () => {
 	const url = await startServer();
-	console.info(chalk.blue(`i Server started`));
+	if (isCmd) console.info(chalk.blue(`i Server started`));
 	const info = await takeScreenshot(url);
-	console.info(chalk.blue(`✔ Screenshot taken`));
-	console.info(JSON.stringify(info, null, '\t'));
+	if (isCmd) console.info(chalk.blue(`✔ Screenshot taken`));
+	if (isCmd) console.info(JSON.stringify(info, null, '\t'));
+	return info();
 };
 
 if (isCmd)
