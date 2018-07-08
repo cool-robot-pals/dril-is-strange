@@ -9,7 +9,6 @@ module.exports = {
 		screenie: 'pompidou',
 	},
 	paths: {
-		screenie: path.resolve(__dirname, 'out', 'pompidou.png'),
 		out: path.resolve(__dirname, 'out'),
 	},
 };

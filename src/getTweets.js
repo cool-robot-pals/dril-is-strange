@@ -2,6 +2,7 @@ require('dotenv').config();
 const twitter = require('twitter');
 const chalk = require('chalk');
 const { filterTweetText, filterTweets } = require('./helper/tweet.js');
+const { randomArrKey } = require('./helper/etc');
 
 const twitterConfig = {
 	consumer_key: process.env.TWITTER_CK,
@@ -96,10 +97,17 @@ const getTweets = async () => {
 		.then(tweets => filterDupes(client, tweets));
 };
 
+const getRandomTweet = async () => {
+	const tweets = await getTweets();
+	return randomArrKey(tweets)
+		.text.split(/\. |; |-|–/)
+		.map(filterTweetText);
+};
+
 const _jest = {
 	getTweetsFromClient,
 	filterDupes,
 	backArchiveClient,
 };
 
-module.exports = { getTweets, _jest };
+module.exports = { getTweets, getRandomTweet, _jest };

@@ -2,6 +2,7 @@ const server = require('../src/express.js');
 const config = require('../.hellarc');
 const puppeteer = require('puppeteer');
 const chalk = require('chalk');
+const fs = require('fs-extra');
 const path = require('path');
 
 const isCmd = !module.parent;
@@ -14,7 +15,7 @@ const startServer = () =>
 		);
 	});
 
-const takeScreenshot = async url => {
+const takeScreenshot = async (url, withLogging = isCmd) => {
 	const browser = await puppeteer.launch({
 		args: ['--no-sandbox'],
 		ignoreHTTPSErrors: true,
@@ -36,10 +37,9 @@ const takeScreenshot = async url => {
 			const log = safeJSONParse(msg.text());
 			if (log.payload) {
 				length = log.length;
-				if (isCmd) console.info(chalk.blue(`i length ${length}`));
+				if (withLogging) console.info(chalk.blue(`i length ${length}`));
 			}
 			if (log.ready) {
-				done++;
 				await page.screenshot({
 					path: path.resolve(
 						config.paths.out,
@@ -47,14 +47,24 @@ const takeScreenshot = async url => {
 					),
 					type: 'png',
 				});
-				if (isCmd) {
-					console.info(chalk.blue(`i screenshotted ${done}/${length}`));
+				done++;
+				if (withLogging) {
+					console.info(chalk.blue(`i Screenshot ${done}/${length}`));
 					console.info(JSON.stringify(log, null, '\t'));
 				}
 
 				if (done >= length) {
 					await browser.close();
-					yay(log);
+					yay({
+						length,
+						medias: log.posts.map((p, i) =>
+							path.resolve(
+								config.paths.out,
+								`${config.names.screenie}-${i}.png`
+							)
+						),
+						posts: log.posts,
+					});
 				}
 			}
 		});
@@ -62,17 +72,22 @@ const takeScreenshot = async url => {
 			page.setViewport({ width: 1280, height: 720 }),
 			page.goto(url),
 		]).then(() => {
-			if (isCmd) console.info(chalk.blue(`i Website open – wait for yt`));
+			if (withLogging) console.info(chalk.blue(`i Website open – wait for yt`));
 		});
 	});
 };
 
-const cmd = async () => {
+const cleanUp = async () => {
+	fs.emptyDirSync(config.paths.out);
+	return Promise.resolve();
+};
+
+const cmd = async (withLogging = isCmd) => {
 	const url = await startServer();
-	if (isCmd) console.info(chalk.blue(`i Server started`));
+	if (withLogging) console.info(chalk.blue(`i Server started`));
+	await cleanUp();
 	const info = await takeScreenshot(url);
-	if (isCmd) console.info(chalk.blue(`✔ Screenshot taken`));
-	if (isCmd) console.info(JSON.stringify(info, null, '\t'));
+	if (withLogging) console.info(chalk.green(`✔ All Screenshots taken`));
 	return info;
 };
 

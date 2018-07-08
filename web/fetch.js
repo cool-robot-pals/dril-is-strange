@@ -60,8 +60,10 @@ const logOutput = (loggables = {}) => {
 	);
 };
 
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 const main = async () => {
-	const { post, video, monologue } = await getPost();
+	const { posts, video, monologue } = await getPost();
 	const [$video, $subs] = ['x-post x-video', 'x-post x-subs'].map($ =>
 		document.querySelector($)
 	);
@@ -77,7 +79,7 @@ const main = async () => {
 	console.log(
 		JSON.stringify({
 			payload: true,
-			length: post.length,
+			length: posts.length,
 		})
 	);
 	player.pauseVideo();
@@ -85,13 +87,13 @@ const main = async () => {
 	player.playVideo();
 
 	onPlaying(() => {
-		post.forEach((p, index) => {
-			setTimeout(() => {
-				addSubtitles($subs, p, monologue);
+		posts.forEach((post, index) => {
+			delay(index * 2000).then(() => {
+				addSubtitles($subs, post, monologue);
 				requestAnimationFrame(() => {
-					logOutput({ post, video, spot, p });
+					logOutput({ post, video, spot, posts });
 				});
-			}, (p.length / 60) * 1000 * index);
+			});
 		});
 	});
 };
