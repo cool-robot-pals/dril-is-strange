@@ -23,40 +23,51 @@ const mediaClient = new twitterLite({
 	subdomain: 'upload',
 });
 
+const uploadMedia = async (media, alt) => {
+	const screenshot = await client.post('media/upload', {
+		media: fs.readFileSync(media),
+	});
+
+	/*
+	media/metadata/create is hella flaky and will often
+	return an invalid response but actually post the
+	alt text anyway. This is why we're eating up its 
+	error responses here instead of throwing them
+	*/
+	await mediaClient
+		.post('media/metadata/create', {
+			media_id: screenshot.media_id_string,
+			alt_text: {
+				text: alt.substring(0, 420),
+			},
+		})
+		.catch(() => {});
+
+	return screenshot.media_id_string;
+};
+
 (async () => {
 	try {
-		const data = await getPost();
+		const data = await getPost(true);
 
 		console.info(chalk.blue(`i Post info:`));
 		console.info(data);
 
-		const screenshot = await client.post('media/upload', {
-			media: fs.readFileSync(config.paths.screenie),
-		});
+		const media_ids = await Promise.all(
+			data.medias.map((media, index) => uploadMedia(media, data.posts[index]))
+		);
 
-		/*
-		media/metadata/create is hella flaky and will often
-		return an invalid response but actually post the
-		alt text anyway. This is why we're eating up its 
-		error responses here instead of throwing them
-		*/
-		const media = await mediaClient
-			.post('media/metadata/create', {
-				media_id: screenshot.media_id_string,
-				alt_text: {
-					text: data.post.substring(0, 420),
-				},
-			})
-			.catch(() => {});
+		console.log(media_ids.join(','));
 
 		const tweet = await client.post('statuses/update', {
-			media_ids: screenshot.media_id_string,
+			media_ids: media_ids.join(','),
 			status: '',
 		});
 
 		console.info(chalk.blue(`i Conn info:`));
-		console.info(JSON.stringify({ screenshot, media, tweet }, null, '\t'));
-		console.info(chalk.green(`✔ Posted: ${data.post}`));
+		console.info(JSON.stringify({ media_ids, tweet }, null, '\t'));
+		console.info(chalk.green(`✔ Posted`));
+		console.info(JSON.stringify(data.posts, null, '\t'));
 		return true;
 	} catch (error) {
 		console.error(chalk.red('✘ Post failed'));

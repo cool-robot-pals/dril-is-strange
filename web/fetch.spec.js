@@ -26,20 +26,6 @@ describe('getPost', () => {
 	});
 });
 
-describe('seekPlayerToRandomSpot', () => {
-	it('should seek player to a random spot', async () => {
-		const player = {
-			getDuration: jest.fn(() => 600),
-			seekTo: jest.fn(),
-			playVideo: jest.fn(),
-		};
-
-		seekPlayerToRandomSpot(player);
-		expect(player.seekTo.mock.calls[0][0]).toEqual(300);
-		expect(player.playVideo).toHaveBeenCalled();
-	});
-});
-
 describe('addSubtitles', () => {
 	const $where = {
 		innerHTML: '',

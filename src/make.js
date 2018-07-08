@@ -1,13 +1,11 @@
 const yaml = require('js-yaml');
 const fs = require('fs');
 const { randomArrKey, pad, capitalizeFirstLetter } = require('./helper/etc');
-const { getTweets } = require('./getTweets');
+const { getRandomTweet } = require('./getTweets');
 
 const make = async () => {
 	try {
-		const tweets = await getTweets();
-
-		const post = randomArrKey(tweets).text;
+		const posts = await getRandomTweet();
 		const video = randomArrKey(
 			yaml.safeLoad(fs.readFileSync('./txt/videos.txt', 'utf8'))
 		);
@@ -15,7 +13,7 @@ const make = async () => {
 		const monologue = Math.random() > 0.75;
 
 		return {
-			post,
+			posts,
 			video,
 			monologue,
 		};
