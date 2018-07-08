@@ -7,7 +7,7 @@ const make = async () => {
 	try {
 		const tweets = await getTweets();
 
-		const post = randomArrKey(tweets).text;
+		const post = [...randomArrKey(tweets).text.split('.'), 'test'];
 		const video = randomArrKey(
 			yaml.safeLoad(fs.readFileSync('./txt/videos.txt', 'utf8'))
 		);

@@ -2,10 +2,9 @@ const getPost = async () => {
 	return window.fetch('/make').then(_ => _.json());
 };
 
-const seekPlayerToRandomSpot = player => {
+const getSeekableRandomSpot = player => {
 	const length = player.getDuration() - 300;
 	const spot = 150 + Math.random() * length;
-	player.seekTo(spot, true);
 	return spot;
 };
 
@@ -40,7 +39,12 @@ const makeYoutubePlayer = (youtube, { $video, video }) =>
 					}),
 				onStateChange: ev => {
 					if (ev.data === 1) {
-						onPlayingCallbacks.forEach(_ => _());
+						while (onPlayingCallbacks.length) {
+							const cb = onPlayingCallbacks.pop();
+							setTimeout(() => {
+								cb();
+							}, 3000);
+						}
 					}
 				},
 			},
@@ -67,13 +71,29 @@ const main = async () => {
 		video,
 	});
 
-	const spot = seekPlayerToRandomSpot(player);
-	addSubtitles($subs, post, monologue);
+	const spot = getSeekableRandomSpot(player);
+	player.seekTo(spot, true);
+
+	console.log(
+		JSON.stringify({
+			payload: true,
+			length: post.length,
+		})
+	);
+	player.pauseVideo();
+	player.seekTo(spot, true);
+	player.playVideo();
 
 	onPlaying(() => {
-		logOutput({ post, video, spot });
+		post.forEach((p, index) => {
+			setTimeout(() => {
+				addSubtitles($subs, p, monologue);
+				requestAnimationFrame(() => {
+					logOutput({ post, video, spot, p });
+				});
+			}, (p.length / 60) * 1000 * index);
+		});
 	});
-	player.playVideo();
 };
 
 window.onYouTubePlayerAPIReady = main;

@@ -5,7 +5,11 @@ module.exports = {
 		live: 3000,
 		test: 1995,
 	},
+	names: {
+		screenie: 'pompidou',
+	},
 	paths: {
 		screenie: path.resolve(__dirname, 'out', 'pompidou.png'),
+		out: path.resolve(__dirname, 'out'),
 	},
 };
