@@ -100,7 +100,7 @@ const getTweets = async () => {
 const getRandomTweet = async () => {
 	const tweets = await getTweets();
 	return randomArrKey(tweets)
-		.text.split(/\. |; |-|–/)
+		.text.split('. ')
 		.map(filterTweetText);
 };
 
