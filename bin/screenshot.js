@@ -40,7 +40,7 @@ const takeScreenshot = async (url, withLogging = isCmd) => {
 				if (withLogging) console.info(chalk.blue(`i length ${length}`));
 			}
 			if (log.ready) {
-				await page.waitFor(10) /*give subs time to render*/
+				await page.waitFor(20); /*give subs time to render*/
 				await page.screenshot({
 					path: path.resolve(
 						config.paths.out,

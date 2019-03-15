@@ -2,7 +2,7 @@ require('dotenv').config();
 const twitter = require('twitter');
 const chalk = require('chalk');
 const { filterTweetText, filterTweets } = require('./helper/tweet.js');
-const { randomArrKey } = require('./helper/etc');
+const { randomArrKey, shuffle } = require('./helper/etc');
 
 const twitterConfig = {
 	consumer_key: process.env.TWITTER_CK,
@@ -12,7 +12,7 @@ const twitterConfig = {
 };
 
 const backArchiveClient = () => ({
-	get: () => require('../txt/back-archive.json'),
+	get: () => shuffle(require('../txt/back-archive.json')).slice(0, 400),
 });
 
 const fetchFromClient = (client, params) =>
@@ -50,7 +50,6 @@ const filterDupes = async (client, tweets) => {
 			process.env.TWITTER_USER_ME
 		);
 		return tweets.filter(_ => !existingTweets.includes(_.text));
-		return rt;
 	} catch (e) {
 		console.error(`couldn't fetch existing tweets ${e}`);
 		return tweets;
