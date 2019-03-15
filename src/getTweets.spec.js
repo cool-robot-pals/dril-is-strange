@@ -14,17 +14,6 @@ describe('backArchiveClient', () => {
 			})
 		);
 	});
-	it('gets tweets from back-archive.json', async () => {
-		expect(await getTweetsFromClient(backArchiveClient(), 1)).toEqual(
-			expect.arrayContaining(
-				[
-					'babies cant smile. its a biological reflex from the brain stem. its fake. they dont know how to smile',
-				].map(_ => ({
-					text: _,
-				}))
-			)
-		);
-	});
 });
 
 describe('getTweetsFromClient', () => {
